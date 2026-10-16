@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>정책·기술 동향 모니터</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>정책·기술 동향 모니터</h1>
+    <p>기사 목록을 넣으면 분류 사전(rules.js)대로 분야·쟁점을 붙여 정리합니다</p>
+  </header>
+
+  <main>
+    <section class="row-top">
+      <!-- 입력 (A: js/import.js) -->
+      <div class="card" id="inputPanel">
+        <h2>기사 목록 넣기</h2>
+        <p class="hint">CSV 첫 줄은 <code>date,title,url</code> · 붙여넣거나 파일을 고르세요</p>
+        <textarea id="inputText" wrap="off" spellcheck="false" placeholder="date,title,url&#10;2026-09-01,기사 제목,https://…"></textarea>
+        <div class="btns">
+          <button type="button" class="btn btn-primary" id="loadSample">예시 불러오기</button>
+          <label class="btn" id="fileBtn" for="fileInput">파일 선택</label>
+          <input type="file" id="fileInput" accept=".csv,.txt,text/csv" hidden>
+          <button type="button" class="btn" id="runBtn">분석하기</button>
+        </div>
+        <div class="msg" id="inputMsg" role="status">아직 입력이 없습니다.</div>
+      </div>
+
+      <div class="right">
+        <!-- 요약 (A: js/import.js) -->
+        <div class="chips" id="summary">
+          <span class="chip">총 <b id="sumTotal">0</b>건</span>
+          <span class="chip">분류됨 <b id="sumClassified">0</b></span>
+          <span class="chip">미분류 <b id="sumUnclassified">0</b></span>
+          <span class="chip">건너뛴 줄 <b id="sumSkipped">0</b></span>
+        </div>
+        <!-- 그래프 (B: js/charts.js) -->
+        <div class="charts">
+          <div class="card chart-card" id="fieldsPanel">
+            <div class="card-head">
+              <h2>분야별 개수</h2>
+              <span class="hint">막대를 누르면 추이에 함께 표시</span>
+            </div>
+            <svg id="chartFields" role="img" aria-label="분야별 기사 수 막대그래프"></svg>
+          </div>
+          <div class="card chart-card" id="weeksPanel">
+            <div class="card-head">
+              <h2>주별 추이</h2>
+              <select id="weekField" aria-label="함께 볼 분야">
+                <option value="">전체만 보기</option>
+              </select>
+            </div>
+            <svg id="chartWeeks" role="img" aria-label="주별 기사 수 선그래프"></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="row-lists">
+      <!-- 목록 (B: js/list.js) -->
+      <div class="card" id="issuePanel">
+        <div class="card-head">
+          <h2>쟁점별 목록 <span class="count" id="issueCount"></span></h2>
+          <div class="toolbar">
+            <input type="search" id="search" placeholder="제목 검색 (예: OpenAI)" aria-label="제목 검색">
+            <button type="button" class="btn btn-accent" id="exportCsv" disabled>CSV 내보내기</button>
+          </div>
+        </div>
+        <div class="tabs" id="issueTabs" role="tablist"></div>
+        <div class="scroll" id="issueList"></div>
+      </div>
+      <div class="card" id="unclassPanel">
+        <div class="card-head">
+          <h2>미분류 목록 <span class="count" id="unclassCount"></span></h2>
+        </div>
+        <p class="hint">분야 낱말에 하나도 안 걸린 기사 · rules.js 보강 후보</p>
+        <div class="scroll" id="unclassList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">처리 기준: rules.js · 예시 입력: 긱뉴스 2026년 9월 목록(날짜·제목·원문 링크) · 서버·외부 연결 없이 작동</footer>
+
+  <!-- 공동 -->
+  <script src="rules.js"></script>
+  <script src="data/sample.js"></script>
+  <!-- B: records-ready 이벤트를 듣는 쪽 -->
+  <script src="js/charts.js"></script>
+  <script src="js/list.js"></script>
+  <!-- A: 읽기·분류 후 records-ready 이벤트를 보내는 쪽 -->
+  <script src="js/classify.js"></script>
+  <script src="js/import.js"></script>
+</body>
+</html>
