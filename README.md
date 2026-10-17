@@ -4,6 +4,12 @@
 
 배포 주소: https://parkjui92.github.io/trend-monitor/
 
+## 설명영상
+
+https://github.com/user-attachments/assets/39e75017-72c6-4a48-a55f-aa17c67bd8f7
+
+Claude가 화면을 조작하며 예시 불러오기 → 분야별 개수 → 막대 누르기 → 쟁점 탭 → 제목 검색 → 미분류 목록 → CSV 내보내기를 차례로 보여 주는 35초 영상(소리 없음).
+
 ## 쓰는 법
 
 1. `index.html`을 더블클릭해 브라우저로 연다. 서버·설치·인터넷 연결이 필요 없다.
